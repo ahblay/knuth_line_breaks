@@ -4,189 +4,51 @@
 \renewcommand{\familydefault}{\ttdefault}
 \begin{document}
 
- \fontdimen2\font=1.6em Far far away, behind the word 
+ \fontdimen2\font=0.8076923076923077em I hope it is not too precious to include an explanation of the algorithm 
 
- \fontdimen2\font=1.375em mountains, far from the countries 
+ \fontdimen2\font=0.7916666666666667em as example text for the algorithm. The main function that does the heavy 
 
- \fontdimen2\font=1.125em Vokalia and Consonantia, there live 
+ \fontdimen2\font=0.6875em lifting is calculate-breakpoints(). This function runs in O(n-squared) time, 
 
- \fontdimen2\font=0.8em the blind texts. Separated they live 
+ \fontdimen2\font=0.7916666666666667em iterating once over the words in our sample text, and then comparing each 
 
- \fontdimen2\font=0.9em in Bookmarksgrove right at the coast 
+ \fontdimen2\font=0.75em word to a subset of potential line breaks. A more detailed explanation of 
 
- \fontdimen2\font=1.1em of the Semantics, a large language 
+ \fontdimen2\font=0.8636363636363636em this algorithm follows. We begin by setting the first breakpoint at the 
 
- \fontdimen2\font=0.5833333333333334em ocean. A small river named Duden flows 
+ \fontdimen2\font=0.7692307692307692em beginning of the text. We then iterate through the words of the text, at 
 
- \fontdimen2\font=0.9166666666666667em by their place and supplies it with 
+ \fontdimen2\font=0.6818181818181819em each step assessing the line starting at the first breakpoint, and extending 
 
- \fontdimen2\font=1.1em the necessary regelialia. It is a 
+ \fontdimen2\font=0.7857142857142857em up through the word we are on. Each of these lines is assigned a score, 
 
- \fontdimen2\font=0.625em paradisematic country, in which roasted 
+ \fontdimen2\font=0.7272727272727273em determined by the stretching or shrinking factor necessary to fit this line 
 
- \fontdimen2\font=1.3em parts of sentences fly into your 
+ \fontdimen2\font=0.5384615384615384em to the prescribed length (as set in `target'). If the spaces must be stretched 
 
- \fontdimen2\font=0.75em mouth. Even the all-powerful Pointing 
+ \fontdimen2\font=0.7727272727272727em or shrunk beyond their capacity (or tolerance), the line is disregarded as 
 
- \fontdimen2\font=0.5714285714285714em has no control about the blind texts it 
+ \fontdimen2\font=0.9166666666666667em unfeasible. However, if a line is feasible, its score is saved, and a 
 
- \fontdimen2\font=0.5em is an almost unorthographic life One day 
+ \fontdimen2\font=0.7272727272727273em new line in considered, now extending from the second breakpoint (should it 
 
- \fontdimen2\font=1.0em however a small line of blind text 
+ \fontdimen2\font=0.6818181818181819em exist) to our current word. Once all possible breakpoints are assessed, the 
 
- \fontdimen2\font=0.7142857142857143em by the name of Lorem Ipsum decided to 
+ \fontdimen2\font=0.8636363636363636em one with the lowest cost is appended to the list `candidate-breaks'. We 
 
- \fontdimen2\font=0.9166666666666667em leave for the far World of Grammar. 
+ \fontdimen2\font=0.5555555555555556em continue in this fashion, updating `candidate-breaks' with growing sequences of 
 
- \fontdimen2\font=1.1666666666666665em The Big Oxmox advised her not to 
+ \fontdimen2\font=0.6666666666666666em possible breakpoints until we reach the end of the text. When the algorithm 
 
- \fontdimen2\font=0.6666666666666666em do so, because there were thousands of 
+ \fontdimen2\font=0.95em reaches the final word, it again calculates the optimal breakpoints for 
 
- \fontdimen2\font=1.0em bad Commas, wild Question Marks and 
+ \fontdimen2\font=0.7222222222222222em that word. It then considers all remaining sequences in `candidate-breaks'. 
 
- \fontdimen2\font=1.5em devious Semikoli, but the Little 
+ \fontdimen2\font=0.9090909090909092em Each of these is assigned a cumulative score corresponding to the total 
 
- \fontdimen2\font=0.4166666666666667em Blind Text didn’t listen. She packed her 
+ \fontdimen2\font=0.36363636363636365em stretching/shrinking factor of all of its constituent lines. The sequence with the 
 
- \fontdimen2\font=0.9em seven versalia, put her initial into 
+ \fontdimen2\font=0.6818181818181819em lowest score is chosen, and its corresponding breakpoints are applied to the 
 
- \fontdimen2\font=1.1666666666666665em the belt and made herself on the 
-
- \fontdimen2\font=0.6666666666666666em way. When she reached the first hills 
-
- \fontdimen2\font=1.0em of the Italic Mountains, she had a 
-
- \fontdimen2\font=0.7857142857142857em last view back on the skyline of her 
-
- \fontdimen2\font=0.5em hometown Bookmarksgrove, the headline of 
-
- \fontdimen2\font=0.5833333333333334em Alphabet Village and the subline of her 
-
- \fontdimen2\font=0.9166666666666667em own road, the Line Lane. Pityful a 
-
- \fontdimen2\font=0.8em rethoric question ran over her cheek, 
-
- \fontdimen2\font=0.9166666666666667em then she continued her way. On her 
-
- \fontdimen2\font=0.5em way she met a copy. The copy warned the 
-
- \fontdimen2\font=0.75em Little Blind Text, that where it came 
-
- \fontdimen2\font=1.2em from it would have been rewritten 
-
- \fontdimen2\font=0.9em a thousand times and everything that 
-
- \fontdimen2\font=1.0833333333333335em was left from its origin would be 
-
- \fontdimen2\font=0.9166666666666667em the word "and" and the Little Blind 
-
- \fontdimen2\font=0.75em Text should turn around and return to 
-
- \fontdimen2\font=1.0em its own, safe country. But nothing 
-
- \fontdimen2\font=0.8333333333333333em the copy said could convince her and 
-
- \fontdimen2\font=0.9285714285714286em so it didn’t take long until a few 
-
- \fontdimen2\font=0.4em insidious Copy Writers ambushed her, made 
-
- \fontdimen2\font=0.9166666666666667em her drunk with Longe and Parole and 
-
- \fontdimen2\font=0.9em dragged her into their agency, where 
-
- \fontdimen2\font=0.5em they abused her for their projects again 
-
- \fontdimen2\font=1.0em and again. And if she hasn’t been 
-
- \fontdimen2\font=0.9em rewritten, then they are still using 
-
- \fontdimen2\font=1.2em her.Far far away, behind the word 
-
- \fontdimen2\font=1.375em mountains, far from the countries 
-
- \fontdimen2\font=1.125em Vokalia and Consonantia, there live 
-
- \fontdimen2\font=0.5em the blind texts. Separated they live in 
-
- \fontdimen2\font=0.9em Bookmarksgrove right at the coast of 
-
- \fontdimen2\font=0.7em the Semantics, a large language ocean. 
-
- \fontdimen2\font=1.0em A small river named Duden flows by 
-
- \fontdimen2\font=1.3em their place and supplies it with 
-
- \fontdimen2\font=1.1em the necessary regelialia. It is a 
-
- \fontdimen2\font=0.625em paradisematic country, in which roasted 
-
- \fontdimen2\font=1.3em parts of sentences fly into your 
-
- \fontdimen2\font=0.75em mouth. Even the all-powerful Pointing 
-
- \fontdimen2\font=0.5714285714285714em has no control about the blind texts it 
-
- \fontdimen2\font=0.5em is an almost unorthographic life One day 
-
- \fontdimen2\font=1.0em however a small line of blind text 
-
- \fontdimen2\font=0.7142857142857143em by the name of Lorem Ipsum decided to 
-
- \fontdimen2\font=0.9166666666666667em leave for the far World of Grammar. 
-
- \fontdimen2\font=1.1666666666666665em The Big Oxmox advised her not to 
-
- \fontdimen2\font=0.6666666666666666em do so, because there were thousands of 
-
- \fontdimen2\font=1.0em bad Commas, wild Question Marks and 
-
- \fontdimen2\font=1.5em devious Semikoli, but the Little 
-
- \fontdimen2\font=0.4166666666666667em Blind Text didn’t listen. She packed her 
-
- \fontdimen2\font=0.9em seven versalia, put her initial into 
-
- \fontdimen2\font=1.1666666666666665em the belt and made herself on the 
-
- \fontdimen2\font=0.6666666666666666em way. When she reached the first hills 
-
- \fontdimen2\font=1.0em of the Italic Mountains, she had a 
-
- \fontdimen2\font=0.7857142857142857em last view back on the skyline of her 
-
- \fontdimen2\font=1.0em hometown Bookmarksgrove, the headline 
-
- \fontdimen2\font=1.0em of Alphabet Village and the subline 
-
- \fontdimen2\font=1.25em of her own road, the Line Lane. 
-
- \fontdimen2\font=0.9em Pityful a rethoric question ran over 
-
- \fontdimen2\font=0.6666666666666666em her cheek, then she continued her way. 
-
- \fontdimen2\font=0.75em On her way she met a copy. The copy 
-
- \fontdimen2\font=1.1em warned the Little Blind Text, that 
-
- \fontdimen2\font=1.1666666666666665em where it came from it would have 
-
- \fontdimen2\font=1.0em been rewritten a thousand times and 
-
- \fontdimen2\font=1.2em everything that was left from its 
-
- \fontdimen2\font=1.0em origin would be the word "and" and 
-
- \fontdimen2\font=1.2em the Little Blind Text should turn 
-
- \fontdimen2\font=1.0em around and return to its own, safe 
-
- \fontdimen2\font=1.0em country. But nothing the copy said 
-
- \fontdimen2\font=0.5em could convince her and so it didn’t take 
-
- \fontdimen2\font=1.4em long until a few insidious Copy 
-
- \fontdimen2\font=0.9em Writers ambushed her, made her drunk 
-
- \fontdimen2\font=0em
+ \fontdimen2\font=0em text.
 \end{document}

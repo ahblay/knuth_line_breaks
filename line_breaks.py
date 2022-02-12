@@ -7,6 +7,8 @@ from pprint import pprint as pp
 class Path:
     def __init__(self, breaks=None, score=0, indices=None, adjustments=None):
 
+        # breaks is an array of the current sequence of line breaks
+        # current_end stores most recent line break
         if breaks is None:
             self.breaks = []
             self.current_end = ''
@@ -14,6 +16,8 @@ class Path:
             self.breaks = breaks
             self.current_end = self.breaks[-1]
 
+        # indices is an array of the indices of line breaks in the sample text
+        # current_index stores the index of the most recent line break
         if indices is None:
             self.indices = []
             self.current_index = -1
@@ -21,19 +25,22 @@ class Path:
             self.indices = indices
             self.current_index = self.indices[-1]
 
+        # adjustments is an array that stores the width of the spaces on each line as fractions of an em-dash
         if adjustments is None:
             self.adjustments = []
         else:
             self.adjustments = adjustments
 
+        # length is the number of characters in the word at the end of the most recent line break
+        # score is the cumulative score of the sequence of breaks
         self.length = len(self.current_end)
         self.score = score
 
 
-# function to render latex document with inter-word spacing as determined by calculate_breakpoints
+# function to render LaTeX document with inter-word spacing as determined by calculate_breakpoints
 def to_latex(sample, solution):
-    pp(solution.__dict__)
 
+    # all of the basic code for rendering a LaTeX file
     header = [
         '\documentclass{article}',
         '\\usepackage[margin=1in]{geometry}',
@@ -43,6 +50,7 @@ def to_latex(sample, solution):
         ]
     footer = '\end{document}'
 
+    # a somewhat hacky solution to construct a LaTeX document where each line has the appropriate spacing
     with open('output.tex', 'w') as f:
         f.writelines('\n'.join(header))
         counter = 0
@@ -56,6 +64,7 @@ def to_latex(sample, solution):
         f.writelines('\n')
         f.writelines(footer)
 
+    # compiles the document
     os.system("pdflatex output.tex")
 
 
@@ -65,8 +74,6 @@ def calculate_breakpoints(sample, target, candidate_breaks, tolerance):
 
     # iterate through each word (or candidate line break) in text sample
     for word_index, word in enumerate(sample):
-
-        #target += (1/10)
 
         # initialize variables for storing information regarding the location and cost of potential line breaks
         best_score = math.inf
@@ -81,12 +88,9 @@ def calculate_breakpoints(sample, target, candidate_breaks, tolerance):
 
             # calculate distance from each candidate's most recent line break to the current word
             line = sample[n.current_index + 1: word_index + 1]
-            #print(line)
 
             # check if this distance is within tolerable range
-
             feasible = demerits(line, target, tolerance, last)
-            #print(feasible)
 
             # if distance is tolerable, consider the cost of adding a line break after current word
             if feasible[0]:
@@ -110,8 +114,6 @@ def calculate_breakpoints(sample, target, candidate_breaks, tolerance):
                              best_break.adjustments + [line_adjustment])
             # add node to active_nodes
             candidate_breaks.append(new_break)
-            #print(new_break.__dict__)
-        #print('\n')
 
     # find the cheapest solution from the list of possible line breaks
     cheapest = math.inf
@@ -120,25 +122,28 @@ def calculate_breakpoints(sample, target, candidate_breaks, tolerance):
         if sequence.score < cheapest:
             best_solution = sequence
 
+    # handling for when the tolerance and line length are too low
+    if not best_solution:
+        raise ValueError("I am returning 'None' because I was "
+                         "unable to find a viable solution with this tolerance "
+                         "and line length. Increasing the tolerance will result in a solution. "
+                         "Be warned of potentially unsightly spaces.")
+
     # render resulting solution in latex
     to_latex(sample, best_solution)
 
     return best_solution.breaks, best_solution.indices, best_solution.adjustments
 
 
+# function to calculate cost of a candidate line break
 # we shall measure line width as a function of letter width in monospaced font
 def demerits(line, target, tolerance, last):
-
-    '''
-    penalty = 0
-    if line[-1] == '\n':
-        penalty = -math.inf
-    '''
 
     space_width = 1
     line_length = 0
     spaces = -1
 
+    # determine length of line
     for word in line:
         # length of word
         line_length += len(word)
@@ -167,6 +172,7 @@ def demerits(line, target, tolerance, last):
     shrink = 0.3 * spaces
 
     # ratio of adjustment necessary
+    em_dashes = 0.5
     if adjustment <= 0:
         if shrink == 0:
             adj_ratio = -math.inf
@@ -185,8 +191,10 @@ def demerits(line, target, tolerance, last):
             em_dashes = (adj_ratio * 0.5 * 0.5) + 0.5
 
     # unacceptable cases
+    # if adj_ratio < -1, then spaces must shrink beyond allowable limit
     if adj_ratio < -1:
         return False, adj_ratio
+    # adj_ratio > tolerance, then spaces must stretch beyond tolerable limit
     if adj_ratio > tolerance:
         return False, adj_ratio
 
@@ -203,11 +211,14 @@ def demerits(line, target, tolerance, last):
         dem = bad**2 + penalty**2
     '''
 
-    # acceptable
+    # acceptable cases
+    # if we are on the final line, disregard the score and simply use normal 0.5em spacing
+    if last or line[-1] == '\n':
+        return True, 0, 0.5
     return True, bad, em_dashes
 
 
-# saves sample text to array
+# function to save sample text to array
 # attempts to handle forced line breaks (\n characters) but doesn't work
 def to_array(sample):
     paragraphs = [paragraph for paragraph in sample.split('\n')]
@@ -216,17 +227,17 @@ def to_array(sample):
         words.extend(paragraph.split())
         words.append('\n')
     words.pop(-1)
-    pp(words)
     return words
 
-with open('sample.txt', 'r') as f:
-    array = to_array(f.read())
-    pp(array)
-
+# initializes variables
+with open('explanation.txt', 'r') as f:
+    sample = to_array(f.read())
 initial_active_node = [Path()]
-result = calculate_breakpoints(array, 40, initial_active_node, 5)
-#print(result)
-#print(no_numbers)
+line_width = 80
+tolerance = 2
+
+# run
+calculate_breakpoints(sample, line_width, initial_active_node, tolerance)
 
 
 
