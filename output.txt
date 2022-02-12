@@ -1,0 +1,39 @@
+
+
+ \fontdimen2\font=0.9em But I must explain to you how all this mistaken idea 
+
+ \fontdimen2\font=0.9375em of denouncing pleasure and praising pain was born and 
+
+ \fontdimen2\font=0.85em I will give you a complete account of the system, and 
+
+ \fontdimen2\font=0.9375em expound the actual teachings of the great explorer of 
+
+ \fontdimen2\font=0.75em the truth, the master-builder of human happiness. No one 
+
+ \fontdimen2\font=0.7857142857142857em rejects, dislikes, or avoids pleasure itself, because it 
+
+ \fontdimen2\font=1.0555555555555556em is pleasure, but because those who do not know how 
+
+ \fontdimen2\font=0.75em to pursue pleasure rationally encounter consequences that 
+
+ \fontdimen2\font=1.0em are extremely painful. Nor again is there anyone who 
+
+ \fontdimen2\font=0.8888888888888888em loves or pursues or desires to obtain pain of itself, 
+
+ \fontdimen2\font=0.6428571428571428em because it is pain, but because occasionally circumstances 
+
+ \fontdimen2\font=1.1111111111111112em occur in which toil and pain can procure him some 
+
+ \fontdimen2\font=1.0625em great pleasure. To take a trivial example, which of 
+
+ \fontdimen2\font=1.0em us ever undertakes laborious physical exercise, except 
+
+ \fontdimen2\font=1.1111111111111112em to obtain some advantage from it? But who has any 
+
+ \fontdimen2\font=0.95em right to find fault with a man who chooses to enjoy 
+
+ \fontdimen2\font=1.0em a pleasure that has no annoying consequences, or one 
+
+ \fontdimen2\font=0.875em who avoids a pain that produces no resultant pleasure? 
+
+ \fontdimen2\font=0em
